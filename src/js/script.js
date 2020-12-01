@@ -10,7 +10,7 @@ class MovieDB {
         this.lang = "fr-CA";
         this.baseUrl = "https://api.themoviedb.org/3/";
         this.imgPath = "https://image.tmdb.org/t/p/";
-        this.nbFilm = 8;
+        this.nbFilm = 8; //9 dans le TP
     }
 
     requeteDernierFilm() {
@@ -31,9 +31,28 @@ class MovieDB {
 
     afficherDernierFilm(data) {
         console.log('afficherDernierFilm');
-        for (let i = 0; i < data.length ; i++) {
-            console.log(data[i].title);
-            console.log(data[i].overview);
+
+        let section = document.querySelector('.liste-films');
+        console.log(section)
+
+        for (let i = 0; i < this.nbFilm ; i++) {
+            //console.log(data[i].title);
+            //console.log(data[i].overview);
+            let article = document.querySelector('.template .film').cloneNode(true);
+            article.querySelector('h2').innerHTML = data[i].title;
+
+            if(data[i].overview != "") {
+                article.querySelector('.description').innerHTML = data[i].overview;
+            } else {
+                article.querySelector('.description').innerHTML = "Aucune description disponible.";
+            }
+
+            let image = article.querySelector('img');
+            image.src = this.imgPath + "w300" + data[i].poster_path;
+
+            //console.log(article);
+
+            section.appendChild(article);
         }
     }
 }
